@@ -8,17 +8,13 @@ function removeDuplicates(stack) {
   const tempStack = new Stack();
 
   while (! stack.isEmpty()) {
-    tempStack.push(stack.pop())
-  }
-
-  while (! tempStack.isEmpty()) {
     const filterStack = new Stack();
-    const item = tempStack.pop();
+    const item = stack.pop();
 
     isUnique = true;
 
-    while (! stack.isEmpty()) {
-      const filterItem = stack.pop();
+    while (! tempStack.isEmpty()) {
+      const filterItem = tempStack.pop();
 
       if (item === filterItem) {
         isUnique = false;
@@ -28,12 +24,16 @@ function removeDuplicates(stack) {
     }
 
     while (! filterStack.isEmpty()) {
-      stack.push(filterStack.pop());
+      tempStack.push(filterStack.pop());
     }
 
     if (isUnique) {
-      stack.push(item);
+      tempStack.push(item);
     }
+  }
+
+  while (! tempStack.isEmpty()) {
+    stack.push(tempStack.pop());
   }
 }
 
@@ -47,4 +47,4 @@ stack.push(1);
 stack.push(3);
 
 removeDuplicates(stack)
-console.log(stack.printStack()) // [5, 2, 1, 3]
+console.log(stack.printStack()) // [2, 5, 1, 3]
